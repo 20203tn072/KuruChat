@@ -2,7 +2,10 @@ import React, { useReducer, useEffect } from 'react'
 import { authManager } from './config/context/auth-manager'
 import AuthContext from './config/context/auth-context'
 import AppRouter from './router/AppRouter'
-
+import { PrimeReactProvider } from 'primereact/api';
+import 'primereact/resources/themes/lara-light-blue/theme.css';  // Tema
+import 'primereact/resources/primereact.min.css';  // Componentes
+import 'primeicons/primeicons.css';  // Iconos
 
 const init = () => JSON.parse(localStorage.getItem('user')) || { signed: false }
 
@@ -17,9 +20,12 @@ function App() {
   }, [user])
 
   return (
-    <AuthContext.Provider value={{ dispatch, user }}>
+    <PrimeReactProvider>
+      <AuthContext.Provider value={{ dispatch, user }}>
         <AppRouter />
     </AuthContext.Provider>
+    </PrimeReactProvider>
+    
   )
 }
 

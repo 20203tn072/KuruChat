@@ -38,7 +38,7 @@ const Chat = () => {
   }
 
   return (
-    <div className="chat-container">
+    <div className="">
       <h2>{chat.name}</h2>
       {chat.messages.map((message, index) => (
         <div key={index} className={`message ${message.fromMe ? 'from-me' : ''}`}>

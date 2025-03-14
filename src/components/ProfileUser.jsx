@@ -1,16 +1,12 @@
-import React from 'react'
+import React from "react";
 
-const ProfileUser = ({ isOpen, onClose, datosPersonales }) => {
-  if (!isOpen) return null;
+const Profile = () => {
   return (
-    <div className="modal-overlay">
-      <div className="modal-content">
-        <h2>Perfil de Usuario</h2>
-        <p>{datosPersonales}</p>
-        <button onClick={onClose}>Cerrar</button>
-      </div>
+    <div className="p-4 text-white">
+      <h2 className="text-xl font-bold">Perfil</h2>
+      <p>Aquí puedes ver y editar tu perfil.</p>
     </div>
-  )
-}
+  );
+};
 
-export default ProfileUser
+export default Profile;
