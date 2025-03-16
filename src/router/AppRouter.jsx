@@ -6,7 +6,6 @@ import SignInPage from '../module/auth/SignInPage'
 import Chat from '../module/user/Chat'
 
 
-
 const AppRouter = () => {
     const [user, setUser] = useState(null);
 
@@ -27,19 +26,19 @@ const AppRouter = () => {
             <Routes>
                 {user?.token ? (
                     user?.usuario?.id_usuario === 1 ? (
-                        <Route
-                            path="*"
-                            element={<AdminLayout perfilData={""} />}
-                        >
-                            <Route path="chat/:chatId" element={<Chat />} />
-                        </Route>
+                            <Route
+                                path="*"
+                                    element={<AdminLayout perfilData={""} />}
+                            >
+                                <Route path="chat/:chatId" element={<Chat />} />
+                            </Route>
                     ) : (
-                        <Route
-                            path="*"
-                            element={<UserLayout perfilData={""} />}
-                        >
-                            <Route path="chat/:chatId" element={<Chat />} />
-                        </Route>
+                            <Route
+                                path="*"
+                                element={<UserLayout perfilData={""} />}
+                            >
+                                <Route path="chat/:chatId" element={<Chat />} />
+                            </Route>
                     )
                 ) : (
                     <>

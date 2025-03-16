@@ -11,6 +11,10 @@ const UserLayout = () => {
     setActiveComponent(component);
   };
 
+  useEffect(() => {
+
+  }, [])
+
   return (
     <div className="grid grid-cols-6 bg-[var(--theme-color)]" id="contenedor-principal">
       {/* Sidebar */}
@@ -19,9 +23,9 @@ const UserLayout = () => {
       <div className="col-span-2 bg-themedark ml-16 h-screen bg-red-800 " id="contenedor-secundario">
         <NavbarHeader activeComponent={activeComponent} />
         <div id="contenedor-tercero">
-          {activeComponent === "Chats" && <Chats />}
-          {activeComponent === "Perfil" && <Profile />}
-          {activeComponent === "Ajustes" && <Settings />}
+          {activeComponent === "Chats"  && <Chats />}
+          {(activeComponent === "Perfil" || activeComponent === "Profile") && <Profile />}
+          {(activeComponent === "Ajustes" || activeComponent === "Settings") && <Settings />}
           
         </div>
       </div>

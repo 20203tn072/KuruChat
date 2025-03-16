@@ -1,44 +1,30 @@
 import React, { useState,useEffect } from "react";
 import { Dropdown } from "primereact/dropdown";
+import { useLan } from "./LanguajeContext";
 
 const Settings = () => {
   const [selectedColor, setSelectedColor] = useState(
     localStorage.getItem("themeColor") || "#ff0000"
   );
 
-  const languages = [
-    { name: "Español", code: "es", flag: "https://flagcdn.com/w40/es.png" },
-    { name: "Inglés", code: "en", flag: "https://flagcdn.com/w40/gb.png" },
-    { name: "Francés", code: "fr", flag: "https://flagcdn.com/w40/fr.png" },
-    { name: "Alemán", code: "de", flag: "https://flagcdn.com/w40/de.png" },
-  ];
-  useEffect(() => {
-    setSelectedLanguage(languages[0]);
-  }, []);
+  const { selectedLanguage, handleLanguageChange, languages, translate } = useLan();
 
-    const [selectedLanguage, setSelectedLanguage] = useState(languages[0]);
-  
-    const languageTemplate = (option) => {
-      if (!option || !option.flag) return null; 
-  
-      return (
-        <div className="flex items-center gap-2">
-          <img src={option.flag} alt={option.name} className="w-5 h-5" />
-          <span>{option.name}</span>
-        </div>
-      );
-    };
-  
-    const handleLanguageChange = (e) => {
-      const selectedLang = languages.find(lang => lang.code === e.value.code);
-      setSelectedLanguage(selectedLang || languages[0]); 
-    };
+  const languageTemplate = (option) => {
+    if (!option || !option.flag) return null;
+
+    return (
+      <div className="flex items-center gap-2">
+        <img src={option.flag} alt={option.name} className="w-5 h-5" />
+        <span>{option.name}</span>
+      </div>
+    );
+  };
   
     const handleColorChange = (event) => {
-    const newColor = event.target.value;
-    setSelectedColor(newColor);
-    document.documentElement.style.setProperty("--theme-color", newColor);
-  };
+      const newColor = event.target.value;
+      setSelectedColor(newColor);
+      document.documentElement.style.setProperty("--theme-color", newColor);
+    };
 
   return (
     <>
@@ -46,7 +32,7 @@ const Settings = () => {
               <span class="material-symbols-outlined">
                 account_circle
               </span>
-              <span class="ms-3">Perfil</span>
+              <span class="ms-3">{}{translate("profile")}</span>
             </div>
             <div className="text-white bg-amber-950" id="Settings">
     
@@ -54,13 +40,13 @@ const Settings = () => {
                 <span class="material-symbols-outlined">
                   language
                 </span>
-                <span class="ms-3">Cambiar Idioma</span>
+                <span class="ms-3">{translate("changeLanguage")}</span>
     
                 <div className=" mt-5 mb-4">
                   <Dropdown
                     value={selectedLanguage}
                     options={languages}
-                    onChange={handleLanguageChange}
+                    onChange={(e)=> handleLanguageChange(e)}
                     optionLabel="name"
                     placeholder="Selecciona un idioma"
                     itemTemplate={languageTemplate}
@@ -82,7 +68,7 @@ const Settings = () => {
                 <span class="material-symbols-outlined">
                   palette
                 </span>
-                <span class="ms-3">Cambiar Color</span>
+                <span class="ms-3">{translate("changeColor")}</span>
                 <input
                   type="color"
                   value={selectedColor}
