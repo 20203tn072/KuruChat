@@ -8,13 +8,20 @@ export const LanguageProvider = ({ children }) => {
     { name: "Inglés", code: "en", flag: "https://flagcdn.com/w40/gb.png" },
   ];
   
-const translations = {
+
+  const translations = {
     es: {
       changeLanguage: "Cambiar Idioma",
       changeColor: "Cambiar Color",
       profile: "Perfil",
       settings: "Ajustes",
       chats: "Chats",
+      logOut:"Cerrar Sesión",
+      search:"Buscar",
+      addFriend:"Agregar Amigo",
+      friendsEmail:"Correo del Amigo",
+      add:"Agregar",
+      cancelAccion:"Cancelar"
     },
     en: {
       changeLanguage: "Change Language",
@@ -22,6 +29,12 @@ const translations = {
       profile: "Profile",
       settings: "Settings",
       chats: "Chats",
+      logOut:"Log Out",
+      search:"Search",
+      addFriend:"Add Friend",
+      friendsEmail:"Friends Email",
+      add:"Add",
+      cancelAccion:"Cancel"   
     },
   };
 

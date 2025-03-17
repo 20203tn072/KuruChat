@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import AddFriendModal from "./AddFriendModal";
-import { useLan } from "./LanguageContext";
+import { useLan } from "./LanguajeContext";
 
 const NavbarHeader = () => {
   const [isModalOpenFriend, setIsModalOpenFriend] = useState(false);
   const [user, setUser] = useState(null);
   const location = useLocation();
   const navigate = useNavigate();
-  const { translate } = useLan();
+  const { translate } = useLan(); 
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");

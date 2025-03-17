@@ -1,24 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Dropdown } from "primereact/dropdown";
 import { NavLink } from "react-router-dom";
+import { useLan } from "./LanguajeContext";
 
 const Settings = () => {
   const [selectedColor, setSelectedColor] = useState(
     localStorage.getItem("themeColor") || "#2D2523"
   );
-  const [textColor, setTextColor] = useState("white");
 
-  const languages = [
-    { name: "Español", code: "es", flag: "https://flagcdn.com/w40/es.png" },
-    { name: "Inglés", code: "en", flag: "https://flagcdn.com/w40/gb.png" },
- 7 ];
-  
- 
- useEffect(() => {
-    setSelectedLanguage(languages[0]);
-  }, []);
-
-  const [selectedLanguage, setSelectedLanguage] = useState(languages[0]);
+  const { selectedLanguage, handleLanguageChange, languages, translate } = useLan();
 
   const languageTemplate = (option) => {
     if (!option || !option.flag) return null;
@@ -30,101 +20,60 @@ const Settings = () => {
     );
   };
 
-  const handleLanguageChange = (e) => {
-    const selectedLang = languages.find(lang => lang.code === e.value.code);
-    setSelectedLanguage(selectedLang || languages[0]);
-  };
   const handleColorChange = (event) => {
     const newColor = event.target.value;
     setSelectedColor(newColor);
-    
     localStorage.setItem("themeColor", newColor);
-  
     document.documentElement.style.setProperty("--theme-color", newColor);
-  
-    const textColor = getContrastColor(newColor);
-    const lighterColor = lightenColor(newColor, 40); // Más claro
-    const darkerColor = darkenColor(newColor, 20); // Más oscuro
-    const borderColor = darkenColor(newColor, 50); // Color para bordes
-  
-    document.documentElement.style.setProperty("--text-color", textColor);
-    document.documentElement.style.setProperty("--lighter-color", lighterColor);
-    document.documentElement.style.setProperty("--darker-color", darkerColor);
-    document.documentElement.style.setProperty("--border-color", borderColor);
   };
-  
-  const getContrastColor = (hexColor) => {
-    const r = parseInt(hexColor.substr(1, 2), 16);
-    const g = parseInt(hexColor.substr(3, 2), 16);
-    const b = parseInt(hexColor.substr(5, 2), 16);
-    const brightness = (r * 299 + g * 587 + b * 114) / 1000;
-    return brightness > 128 ? "#000000" : "#FFFFFF";
-  };
-  
-  const lightenColor = (hex, percent) => {
-    let num = parseInt(hex.slice(1), 16),
-        amt = Math.round(2.55 * percent),
-        r = (num >> 16) + amt,
-        g = ((num >> 8) & 0x00FF) + amt,
-        b = (num & 0x0000FF) + amt;
-    
-    return `#${(0x1000000 + (r < 255 ? r : 255) * 0x10000 + (g < 255 ? g : 255) * 0x100 + (b < 255 ? b : 255)).toString(16).slice(1).toUpperCase()}`;
-  };
-  
-  const darkenColor = (hex, percent) => {
-    let num = parseInt(hex.slice(1), 16),
-        amt = Math.round(2.55 * percent),
-        r = (num >> 16) - amt,
-        g = ((num >> 8) & 0x00FF) - amt,
-        b = (num & 0x0000FF) - amt;
-    
-    return `#${(0x1000000 + (r > 0 ? r : 0) * 0x10000 + (g > 0 ? g : 0) * 0x100 + (b > 0 ? b : 0)).toString(16).slice(1).toUpperCase()}`;
-  };
-  
-  useEffect(() => {
-  const storedColor = localStorage.getItem("themeColor") || "#2D2523"; // Color por defecto
-  document.documentElement.style.setProperty("--theme-color", storedColor);
 
-  // Aplicar color del texto basado en el fondo
-  const textColor = getContrastColor(storedColor);
-  document.documentElement.style.setProperty("--text-color", textColor);
-}, []);
+  useEffect(() => {
+    const storedColor = localStorage.getItem("themeColor") || "#2D2523";
+    document.documentElement.style.setProperty("--theme-color", storedColor);
+  }, []);
 
   return (
     <>
-      <div className="border-b-1 border-color-brown p-4 content-center justify-center" style={{  color: "var(--text-color)" }}>
+      <div className="border-b-1  p-4 content-center" id="profile">
         <NavLink to="/user/profile">
           <div className="flex items-center">
-            <span className="material-symbols-outlined"  >account_circle</span>
-            <span className="ms-3" >Perfil</span>
+            <span className="material-symbols-outlined">account_circle</span>
+            <span className="ms-3">{translate("profile")}</span>
           </div>
         </NavLink>
       </div>
 
-      <div className="" style={{ borderColor: "var(--border-color)", color: "var(--text-color)" }}>
-        <div className="border-b-1 border-color-brown p-4">
+      <div className="text-white " id="Settings">
+        <div className="border-b-1  p-4">
           <div className="flex items-center">
             <span className="material-symbols-outlined">language</span>
-            <span className="ms-3">Cambiar Idioma</span>
+            <span className="ms-3">{translate("changeLanguage")}</span>
           </div>
           <div className="mt-5 mb-4">
             <Dropdown
               value={selectedLanguage}
               options={languages}
-              onChange={handleLanguageChange}
+              onChange={(e) => handleLanguageChange(e)}
               optionLabel="name"
-              placeholder="Selecciona un idioma"
+              placeholder={translate("selectLanguage")}
               itemTemplate={languageTemplate}
               valueTemplate={languageTemplate}
               className="w-full"
+              pt={{
+                root: { className: "bg-blue-500 text-white rounded-lg px-2 shadow-md" },
+                panel: { className: "bg-white border border-gray-300 rounded-lg shadow-lg" },
+                item: ({ context }) => ({
+                  className: context.selected ? "bg-blue-600 text-white" : "hover:bg-blue-100",
+                }),
+              }}
             />
           </div>
         </div>
 
-        <div className="border-b-1 border-color-brown p-4">
+        <div className="border-b-1 p-4">
           <div className="flex items-center">
             <span className="material-symbols-outlined">palette</span>
-            <span className="ms-3">Cambiar Color</span>
+            <span className="ms-3">{translate("changeColor")}</span>
           </div>
           <input
             type="color"
@@ -137,7 +86,7 @@ const Settings = () => {
         <NavLink to="/">
           <div className="flex items-center p-4">
             <span className="material-symbols-outlined p-1 text-4xl">logout</span>
-            <span className="ms-3">Cerrar Sesión</span>
+            <span className="ms-3">{translate("logOut")}</span>
           </div>
         </NavLink>
       </div>

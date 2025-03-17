@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useLan } from "./LanguageContext";
+import { useLan } from "./LanguajeContext";
 
 
 const addFriendModal = ({ isOpen, onClose }) => {
