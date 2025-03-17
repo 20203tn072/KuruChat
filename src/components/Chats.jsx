@@ -11,23 +11,15 @@ const users = [
   { name: "Aurora Sky", lastMessage: "¿Qué tal tu día?", lastMessageDate: "12/07" },
   { name: "Aurora Sky", lastMessage: "Te llamo más tarde.", lastMessageDate: "12/06" },
 ];
-const handleMouseEnter = (tooltipId) => {
-  setActiveTooltip(tooltipId);
-};
-
-const handleMouseLeave = () => {
-  setActiveTooltip(null);
-};
-
 
 const Chats = () => {
   return (
-    <div className="overflow-y-auto  h-[487px]">
-        {users.map((user, index) => (
-        <div className="bg-amber-600 border-b-1 border-amber-700 ">
-          <UserChatCard key={index} user={user} index={index} />
+    <div className="overflow-y-auto h-[468px] mr-1.5">
+      {users.map((user, index) => (
+        <div key={index} className="border-b border-1 border-[var(--border-color)] bg-[var(--theme-color)]">
+          <UserChatCard user={user} index={index} />
         </div>
-          ))}
+      ))}
     </div>
   );
 };

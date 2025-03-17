@@ -1,7 +1,11 @@
 import React, { useState } from 'react'
+import { useLan } from "./LanguageContext";
+
 
 const addFriendModal = ({ isOpen, onClose }) => {
   const [email, setEmail] = useState('');
+
+  const { translate } = useLan();
 
   const handleAddFriend = () => {
     onClose(); 
@@ -15,16 +19,18 @@ const addFriendModal = ({ isOpen, onClose }) => {
   if (!isOpen) return null; 
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <div className="bg-white p-6 rounded-lg w-96 shadow-lg">
-        <h2 className="text-2xl font-semibold mb-4">Agregar Amigo</h2>
+    <div className="fixed inset-0 z-40 flex items-center justify-center"
+    style={{
+        backgroundColor: "rgba(0, 0, 0, 0.5)", // Fondo negro con opacidad del 50%
+    }}
+>    <div className="bg-[var(--darker-color)] text-[var(--text-color)]  p-6 rounded-lg w-96 shadow-lg">
+        <h2 className="text-2xl font-semibold mb-4 text-[var(--text-color)] ">{translate("addFriend")}</h2>
         <div className="mb-4">
-          <label htmlFor="email" className="block text-sm font-medium text-gray-700">Correo del amigo</label>
+          <label htmlFor="email" className="block text-sm font-medium text-[var(--text-color)]  ">{translate("friendsEmail")}</label>
           <input
             type="email"
             id="email"
-            className="mt-2 p-2 w-full border border-gray-300 rounded-md"
-            placeholder="Escribe el correo"
+            className="mt-2 p-2 w-full border  text-[var(--text-color)] placeholder-[var(--text-color)]   rounded-md"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
@@ -32,15 +38,15 @@ const addFriendModal = ({ isOpen, onClose }) => {
         <div className="flex justify-end space-x-4">
           <button
             onClick={handleCancel}
-            className="px-4 py-2 bg-gray-300 rounded-md hover:bg-gray-400"
+            className="px-4 py-2 bg-gray-200 text-gray-400 rounded-md hover:bg-gray-300 hover:text-black"
           >
-            Cancelar
+            {translate("cancelAccion")}
           </button>
           <button
             onClick={handleAddFriend}
-            className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+            className="px-4 py-2 bg-[var(--theme-color)]  rounded-md hover:bg-[var(--lighter-color)]"
           >
-            Agregar
+            {translate("add")}
           </button>
         </div>
       </div>

@@ -76,8 +76,8 @@ body {
   background-color: #9995CA;
 }
 
-.bg-custom-purple-selector{
-  background-color: rgb(135, 112, 247);
+.bg-custom-brown-selector{
+  background-color: #241E1C;
 }
 
 .bg-custom-blue {
@@ -85,4 +85,69 @@ body {
 }
 
 
+.bg-custom-brown{
+  background-color: #2D2523;
+}
+.border-color-brown{
+  border: 2px solid rgba(0, 0, 0, 0.2);
+}
+:root {
+  --theme-color: #BCAFAA; /* Color de fondo principal */
+  --text-color: #000000; /* Color de texto */
+  --lighter-color: #D4C8BB; /* Tono más claro */
+  --darker-color: #8C7D6B; /* Tono más oscuro */
+  --border-color: #5A4E3E; /* Borde */
+}
 
+body {
+  background-color: var(--theme-color);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Estilos para divs con colores dinámicos */
+.container {
+  background-color: var(--lighter-color);
+  border: 2px solid var(--border-color);
+  color: var(--text-color);
+}
+
+/* Bordes dinámicos */
+.border-dynamic {
+  border-color: var(--border-color);
+}
+
+/* Botón con efecto hover */
+.button-dynamic {
+  background-color: var(--darker-color);
+  color: var(--text-color);
+  border: 2px solid var(--border-color);
+  transition: background-color 0.3s ease;
+}
+
+.button-dynamic:hover {
+  background-color: var(--lighter-color);
+  color: var(--border-color);
+}
+/* Estilos generales del scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+/* Fondo del scrollbar */
+::-webkit-scrollbar-track {
+  background: var(--lighter-color);
+  border-radius: 10px;
+}
+
+/* Barra de desplazamiento */
+::-webkit-scrollbar-thumb {
+  background: var(--darker-color);
+  border-radius: 10px;
+}
+
+/* Barra de desplazamiento cuando el usuario pasa el cursor */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--darker-color);
+}
