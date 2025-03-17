@@ -5,13 +5,11 @@ import UserLayout from "../module/user/UserLayout";
 import SignInPage from "../module/auth/SignInPage";
 import Chat from "../module/user/Chat";
 
-// Componente para proteger rutas según el rol
 const ProtectedRoute = ({ element, user, allowedRoles }) => {
     if (!user?.token) return <Navigate to="/" replace />;
     if (!allowedRoles.includes(user.usuario.id_usuario)) return <Navigate to="/" replace />;
     return element;
 };
-
 const AppRouter = () => {
     const [user, setUser] = useState(null);
 
@@ -22,7 +20,6 @@ const AppRouter = () => {
         }
     }, []);
 
-    // Escucha cambios en localStorage
     useEffect(() => {
         const handleStorageChange = () => {
             const storedUser = localStorage.getItem("user");
@@ -35,23 +32,27 @@ const AppRouter = () => {
     return (
         <BrowserRouter>
             <Routes>
-                {/* Ruta de inicio de sesión */}
-                <Route path="/" element={<SignInPage setUser={setUser} />} />
-
-                {/* Rutas protegidas */}
-                <Route
-                    path="/admin/*"
-                    element={<ProtectedRoute user={user} allowedRoles={[1]} element={<AdminLayout perfilData={""} />} />}
-                >
-                    <Route path="chat/:chatId" element={<Chat />} />
-                </Route>
-
-                <Route
-                    path="/user/*"
-                    element={<ProtectedRoute user={user} allowedRoles={[2]} element={<UserLayout perfilData={""} />} />}
-                >
-                    <Route path="chat/:chatId" element={<Chat />} />
-                </Route>
+                {user?.token ? (
+                    user?.usuario?.id_usuario === 1 ? (
+                            <Route
+                                path="*"
+                                    element={<AdminLayout perfilData={""} />}
+                            >
+                                <Route path="chat/:chatId" element={<Chat />} />
+                            </Route>
+                    ) : (
+                            <Route
+                                path="*"
+                                element={<UserLayout perfilData={""} />}
+                            >
+                                <Route path="chat/:chatId" element={<Chat />} />
+                            </Route>
+                    )
+                ) : (
+                    <>
+                        <Route path="/" element={<SignInPage setUser={setUser}/>} />
+                    </>
+                )}
             </Routes>
         </BrowserRouter>
     );

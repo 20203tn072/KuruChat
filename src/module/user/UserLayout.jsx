@@ -77,6 +77,10 @@ const UserLayout = () => {
       break;
   }
 
+  useEffect(() => {
+
+  }, [])
+
   return (
     <div className="grid grid-cols-10 h-screen" id="contenedor-principal">
       {/* Sidebar */}
@@ -92,7 +96,7 @@ const UserLayout = () => {
         ) : (
           <div className="text-white text-center mt-10"></div>
         )}
-      </div>
+  </div>
     </div>
   );
 };

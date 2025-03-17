@@ -6,7 +6,7 @@ import { PrimeReactProvider } from 'primereact/api';
 import 'primereact/resources/themes/lara-light-blue/theme.css';  // Tema
 import 'primereact/resources/primereact.min.css';  // Componentes
 import 'primeicons/primeicons.css';  // Iconos
-import { LanguageProvider, useLan } from './components/LanguageContext';
+import { LanguageProvider, useLan } from './components/LanguajeContext';
 
 const init = () => JSON.parse(localStorage.getItem('user')) || { signed: false }
 
